@@ -8,7 +8,7 @@
 #include "Player.h"
 
 typedef struct node{
-    Player p;
+    Player *p;
     struct node *next;
 } Node;
 
@@ -19,7 +19,17 @@ typedef struct {
 
 class Players {
 public:
+    Players();
+    ~Players();
+
+    void addPlayer(Player *player);
+    int getNumberOfPlayers();
+    Player *getPlayer(string playerName);
+
+    void printAllPlayersMean();
+
 private:
+    int numberOfPlayer;
     PlayerList playerList;
 };
 

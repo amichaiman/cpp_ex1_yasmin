@@ -21,7 +21,7 @@ void parse_args(int argc, char **argv, int *num_of_referees, int *num_of_athlete
 int get_input();
 
 
-bool cin_good_status();
+bool cinGoodStatus();
 
 int main(int argc, char **argv) {
     const int QUIT = 0;
@@ -36,26 +36,67 @@ int main(int argc, char **argv) {
     while(input != QUIT){
         switch (input){
             case(1):{
+                if (players.getNumberOfPlayers() > num_of_athletes) {
+                    cerr << "ERROR: MAX_ATHLETES exceeded" << endl;
+                    break;
+                }
                 cout << "Enter player name, followed by grades" << endl;
                 string player_name;
                 cin >> player_name;
-                if (!cin_good_status()){
+                if (!cinGoodStatus()){
                     invalid_input();
                     break;
                 }
-                string grades;
-                cin >> grades;
+                Player *p = new Player(num_of_referees);
 
-                Player p(player_name, grades, num_of_referees);
+                if (!p->setName(player_name)){ //returns false if player's name is invalid
+                    invalid_input();
+                    delete p;
+                    break;
+                }
+
+                float grades[num_of_referees];
+                for (int i=0; i<num_of_referees; i++){
+                    cin >> grades[i];
+                    char c;
+                    cin.get(c);
+                    if (i != num_of_referees-1 && c != ','){
+                        cerr << "ERROR: invalid input" << endl;
+                    }
+                }
+                p->addGrades(grades);
+                players.addPlayer(p);
             } break;
             case(2):{
-
+                string name;
+                cin >> name;
+                if (!cinGoodStatus()){
+                    invalid_input();
+                    break;
+                }
+                Player *p = players.getPlayer(name);
+                if (!p) {
+                    cerr << "ERROR: " << name << " does not exist" << endl;
+                    break;
+                }
+                p->printGrades();
             } break;
             case(3):{
-
+                string name;
+                cin >> name;
+                if (!cinGoodStatus()){
+                    invalid_input();
+                    break;
+                }
+                Player *p = players.getPlayer(name);
+                if (!p) {
+                    cerr << "ERROR: " << name << " does not exist" << endl;
+                    break;
+                }
+                p->printMean();
             } break;
             case(4):{
-
+                players.printAllPlayersMean();
             } break;
             case(5):{
 
@@ -70,7 +111,7 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-bool cin_good_status() {
+bool cinGoodStatus() {
     if (cin.fail()) {
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

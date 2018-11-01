@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/amichai/CLionProjects/cpp_ex1/Player.cpp
+Player.h
+/home/amichai/CLionProjects/cpp_ex1/Player.h
+cctype
+-
+sstream
+-
+limits
+-
+iostream
+-
+
+/home/amichai/CLionProjects/cpp_ex1/Player.h
+string
+-
+
+/home/amichai/CLionProjects/cpp_ex1/Players.cpp
+Players.h
+/home/amichai/CLionProjects/cpp_ex1/Players.h
+
+/home/amichai/CLionProjects/cpp_ex1/Players.h
+Player.h
+/home/amichai/CLionProjects/cpp_ex1/Player.h
+
+/home/amichai/CLionProjects/cpp_ex1/main.cpp
+iostream
+-
+cstdlib
+-
+sstream
+-
+limits
+-
+Players.h
+/home/amichai/CLionProjects/cpp_ex1/Players.h
+Player.h
+/home/amichai/CLionProjects/cpp_ex1/Player.h
+

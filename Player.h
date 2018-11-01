@@ -9,18 +9,24 @@ using namespace std;
 
 class Player {
 public:
-    Player(const string &name, string grades, int number_of_judges);
+    Player(int numberOfJudges1);
 
+    virtual ~Player();
     const string &getName() const;
-    void setName(const string &name);
+    bool setName(const string &name);
     float getGrade(int i) const;
+    void addGrades(float grades[]);
+    bool playerNameIsLegal(string playerName);
 
-    static bool player_name_is_legal(string player_name);
+    void printGrades();
+
+    void printMean();
 
 private:
     string name;
-    int number_of_judges;
+    int numberOfJudges;
     float *grades;
+
 };
 
 

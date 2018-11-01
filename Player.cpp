@@ -6,44 +6,64 @@
 #include <cctype>
 #include <sstream>
 #include <limits>
+#include <iostream>
 
-Player::Player(const string &name, string grades,  int number_of_judges) {
-    this->name = name;
-    this->number_of_judges = number_of_judges;
-    this->grades = new float[number_of_judges];
-
-    stringstream ss;
-    ss << grades;
-
-    for (int i=0; i<number_of_judges; i++){
-        ss >> grades[i];
-        ss.ignore(std::numeric_limits<std::streamsize>::max(), ',');
-    }
-
+Player::Player(int numberOfJudges) {
+    this->numberOfJudges = numberOfJudges;
+    this->grades = new float[numberOfJudges];
 }
 
-
+void Player::addGrades(float grades[]){
+    for (int i=0; i<numberOfJudges; i++){
+        this->grades[i] = grades[i];
+    }
+}
 const string &Player::getName() const {
     return name;
 }
 
-void Player::setName(const string &name) {
+bool Player::setName(const string &name) {
+    if (!playerNameIsLegal(name)) {
+        return false;
+    }
     Player::name = name;
+    return true;
 }
 
 float Player::getGrade(int i) const {
-    if (i<0 || i>number_of_judges){
+    if (i<0 || i>numberOfJudges){
         return -1;
     }
     return grades[i];
 }
 
 
-bool Player::player_name_is_legal(string player_name) {
-    for (int i=0; i<player_name.length(); i++){
-       if (!isdigit(player_name[i]) && !isalpha(player_name[i])){
+bool Player::playerNameIsLegal(string playerName) {
+    for (unsigned int i=0; i<playerName.length(); i++){
+       if (!isdigit(playerName[i]) && !isalpha(playerName[i])){
            return false;
        }
     }
     return true;
+}
+
+Player::~Player() {
+    delete grades;
+}
+
+void Player::printGrades() {
+    cout << getName() << "=[";
+    for (int i=0; i<numberOfJudges; i++){
+        cout << grades[i] << (i==numberOfJudges-1 ? "]" : ",");
+    }
+    cout << endl;
+}
+
+void Player::printMean() {
+    float sum = 0;
+
+    for (int i=0; i<numberOfJudges; i++){
+        sum += grades[i];
+    }
+    cout << getName() << ", " << sum/numberOfJudges << endl;
 }
