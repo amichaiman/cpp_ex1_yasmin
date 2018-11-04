@@ -7,6 +7,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/amichai/CLionProjects/cpp_ex1/Player.cpp" "/home/amichai/CLionProjects/cpp_ex1/cmake-build-debug/CMakeFiles/cpp_ex1.dir/Player.cpp.o"
   "/home/amichai/CLionProjects/cpp_ex1/Players.cpp" "/home/amichai/CLionProjects/cpp_ex1/cmake-build-debug/CMakeFiles/cpp_ex1.dir/Players.cpp.o"
   "/home/amichai/CLionProjects/cpp_ex1/main.cpp" "/home/amichai/CLionProjects/cpp_ex1/cmake-build-debug/CMakeFiles/cpp_ex1.dir/main.cpp.o"
+  "/home/amichai/CLionProjects/cpp_ex1/mainFunctions.cpp" "/home/amichai/CLionProjects/cpp_ex1/cmake-build-debug/CMakeFiles/cpp_ex1.dir/mainFunctions.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

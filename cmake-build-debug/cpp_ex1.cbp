@@ -99,6 +99,12 @@
 		<Unit filename="/home/amichai/CLionProjects/cpp_ex1/main.cpp">
 			<Option target="cpp_ex1"/>
 		</Unit>
+		<Unit filename="/home/amichai/CLionProjects/cpp_ex1/mainFunctions.cpp">
+			<Option target="cpp_ex1"/>
+		</Unit>
+		<Unit filename="/home/amichai/CLionProjects/cpp_ex1/mainFunctions.h">
+			<Option target="cpp_ex1"/>
+		</Unit>
 		<Unit filename="/home/amichai/CLionProjects/cpp_ex1/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

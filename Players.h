@@ -25,12 +25,19 @@ public:
     void addPlayer(Player *player);
     int getNumberOfPlayers();
     Player *getPlayer(string playerName);
-
     void printAllPlayersMean();
-
+    void printAllJudgesMean();
+    int getNumberOfJudges() const;
+    void setNumberOfJudges(int numberOfJudges);
+    void printCovarianceMatrix();
 private:
-    int numberOfPlayer;
+    int numberOfJudges;
+    int currentNumberOfPlayer;
     PlayerList playerList;
+    float getJudgeMean(int judgeNumber);
+    int getPrecision(float n);
+    float computeCovariance(int i, int j);
+    Player * getPlayerAt(int i);
 };
 
 #endif //CPP_EX1_PLAYERS_H

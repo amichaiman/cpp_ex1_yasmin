@@ -7,6 +7,8 @@
 #include <sstream>
 #include <limits>
 #include <iostream>
+#include <iomanip>
+#include <cmath>
 
 Player::Player(int numberOfJudges) {
     this->numberOfJudges = numberOfJudges;
@@ -54,16 +56,30 @@ Player::~Player() {
 void Player::printGrades() {
     cout << getName() << "=[";
     for (int i=0; i<numberOfJudges; i++){
-        cout << grades[i] << (i==numberOfJudges-1 ? "]" : ",");
+        cout << fixed << setprecision(getPrecision(grades[i])) << grades[i] << (i==numberOfJudges-1 ? "]" : ",");
     }
     cout << endl;
 }
 
 void Player::printMean() {
+    cout << getName() << ", " << getMean() << endl;
+}
+
+int Player::getPrecision(float n){
+    if (floor(n) == n){
+        return 0;
+    }
+    if (floor(n*10) == n*10){
+        return 1;
+    }
+    return 2;
+}
+
+float Player::getMean() {
     float sum = 0;
 
     for (int i=0; i<numberOfJudges; i++){
         sum += grades[i];
     }
-    cout << getName() << ", " << sum/numberOfJudges << endl;
+    return sum/numberOfJudges;
 }

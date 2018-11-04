@@ -10,23 +10,22 @@ using namespace std;
 class Player {
 public:
     Player(int numberOfJudges1);
-
-    virtual ~Player();
+    ~Player();
     const string &getName() const;
     bool setName(const string &name);
     float getGrade(int i) const;
     void addGrades(float grades[]);
     bool playerNameIsLegal(string playerName);
-
     void printGrades();
-
     void printMean();
+
+    float getMean();
 
 private:
     string name;
     int numberOfJudges;
     float *grades;
-
+    int getPrecision(float n);
 };
 
 

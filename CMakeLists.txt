@@ -3,4 +3,4 @@ project(cpp_ex1)
 
 set(CMAKE_CXX_STANDARD 98)
 
-add_executable(cpp_ex1 main.cpp Players.cpp Players.h Player.cpp Player.h)
+add_executable(cpp_ex1 main.cpp Players.cpp Players.h Player.cpp Player.h mainFunctions.cpp mainFunctions.h)

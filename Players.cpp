@@ -2,6 +2,10 @@
 // Created by amichai on 26/10/18.
 //
 
+#include <iostream>
+#include <sstream>
+#include <cmath>
+#include <iomanip>
 #include "Players.h"
 
 void Players::addPlayer(Player *player) {
@@ -12,6 +16,12 @@ void Players::addPlayer(Player *player) {
         toAdd->p = player;
         toAdd->next = NULL;
         playerList.head = toAdd;
+        currentNumberOfPlayer++;
+        return;
+    }
+    if (cur->p->getName() == player->getName()) { //check if first node's value is equal to the value we want to insert
+        delete cur->p;
+        cur->p =  player;
         return;
     }
     while (cur->next != NULL) { //list is not empty: iterate to end of list
@@ -28,16 +38,16 @@ void Players::addPlayer(Player *player) {
     toAdd->next = NULL;
     cur->next = toAdd;
 
-    numberOfPlayer++;
+    currentNumberOfPlayer++;
 }
 
 Players::Players() {
     playerList.head = NULL;
-    numberOfPlayer=0;
+    currentNumberOfPlayer=0;
 }
 
 int Players::getNumberOfPlayers() {
-    return numberOfPlayer;
+    return currentNumberOfPlayer;
 }
 
 Players::~Players() {
@@ -62,8 +72,102 @@ Player *Players::getPlayer(string playerName) {
 
 void Players::printAllPlayersMean() {
     Node *cur = playerList.head;
-
+    if (cur == NULL){
+        cerr << "ERROR: no records in the system" << endl;
+        return;
+    }
     while (cur != NULL) {
         cur->p->printMean();
+        cur = cur->next;
     }
+}
+
+void Players::printAllJudgesMean() {
+    stringstream ss;
+
+    Node *cur = playerList.head;
+    if (cur == NULL){
+        cerr << "ERROR: no records in the system" << endl;
+        return;
+    }
+    ss << "mean=[";
+    for (int i=0; i<numberOfJudges; i++){
+        float judgeMean = getJudgeMean(i);
+        ss << fixed << setprecision(getPrecision(judgeMean)) << judgeMean << (i == numberOfJudges-1 ? "]" : ",");
+    }
+    cout << ss.str() << endl;
+}
+
+int Players::getNumberOfJudges() const {
+    return numberOfJudges;
+}
+
+void Players::setNumberOfJudges(int numberOfJudges) {
+    Players::numberOfJudges = numberOfJudges;
+}
+
+float Players::getJudgeMean(int judgeNumber) {
+    Node *cur = playerList.head;
+    float sum = 0;
+
+    while (cur != NULL){
+        sum += cur->p->getGrade(judgeNumber);
+        cur = cur->next;
+    }
+    return sum/currentNumberOfPlayer;
+
+}
+
+int Players::getPrecision(float n) {
+    if (floor(n) == n){
+        return 0;
+    }
+    if (floor(n*10) == n*10){
+        return 1;
+    }
+    return 2;
+}
+
+void Players::printCovarianceMatrix() {
+    stringstream ss;
+    ss << "cov=[\n";
+    Node *cur = playerList.head;
+    if (cur == NULL){
+        cerr << "ERROR: no records in the system" << endl;
+        return;
+    }
+    for (int i=0; i<currentNumberOfPlayer; i++){
+        for (int j=0; j<numberOfJudges; j++){
+            float covariance = computeCovariance(i,j);
+            ss << fixed << setprecision(getPrecision(covariance)) << covariance << (j == numberOfJudges-1 ? "\n" : ",");
+        }
+    }
+    ss << "]";
+    cout << ss.str() << endl;
+}
+
+float Players::computeCovariance(int i, int j) {
+    Player *playerI = getPlayerAt(i);
+    Player *playerJ = getPlayerAt(j);
+    float ui = playerI->getMean();
+    float uj = playerJ->getMean();
+
+    float sum = 0;
+
+    for (int k=0; k<numberOfJudges; k++){
+        sum += (playerI->getGrade(k)-ui)*(playerJ->getGrade(k)-uj);
+    }
+    return (numberOfJudges==1 ? sum/numberOfJudges : sum/(numberOfJudges-1));
+}
+
+Player* Players::getPlayerAt(int index) {
+    Node *cur = playerList.head;
+
+    if (index > currentNumberOfPlayer){
+        return cur->p;
+    }
+    while (index--) {
+        cur = cur->next;
+    }
+    return cur->p;
 }
