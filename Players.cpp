@@ -119,6 +119,7 @@ float Players::getJudgeMean(int judgeNumber) {
 }
 
 int Players::getPrecision(float n) {
+    n = static_cast<float>((round(n * 100)) / 100);
     if (floor(n) == n){
         return 0;
     }
@@ -136,7 +137,7 @@ void Players::printCovarianceMatrix() {
         cerr << "ERROR: no records in the system" << endl;
         return;
     }
-    for (int i=0; i<currentNumberOfPlayer; i++){
+    for (int i=0; i<numberOfJudges; i++){
         for (int j=0; j<numberOfJudges; j++){
             float covariance = computeCovariance(i,j);
             ss << fixed << setprecision(getPrecision(covariance)) << covariance << (j == numberOfJudges-1 ? "\n" : ",");
@@ -147,17 +148,15 @@ void Players::printCovarianceMatrix() {
 }
 
 float Players::computeCovariance(int i, int j) {
-    Player *playerI = getPlayerAt(i);
-    Player *playerJ = getPlayerAt(j);
-    float ui = playerI->getMean();
-    float uj = playerJ->getMean();
+    float ui = getJudgeMean(i);
+    float uj = getJudgeMean(j);
 
-    float sum = 0;
+    double sum = 0;
 
-    for (int k=0; k<numberOfJudges; k++){
-        sum += (playerI->getGrade(k)-ui)*(playerJ->getGrade(k)-uj);
+    for (int k=0; k<currentNumberOfPlayer; k++){
+        sum += (getPlayerAt(k)->getGrade(i)-ui)*(getPlayerAt(k)->getGrade(j)-uj);
     }
-    return (numberOfJudges==1 ? sum/numberOfJudges : sum/(numberOfJudges-1));
+    return static_cast<float>(currentNumberOfPlayer == 1 ? sum / currentNumberOfPlayer : sum / (currentNumberOfPlayer - 1));
 }
 
 Player* Players::getPlayerAt(int index) {

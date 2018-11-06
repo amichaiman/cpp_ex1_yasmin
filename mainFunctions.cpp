@@ -19,11 +19,7 @@ void handleGame(int numOfReferees, int maxNumOfAthletes) {
     while(input != QUIT){
         switch (input){
             case(1):{
-                if (players.getNumberOfPlayers() > maxNumOfAthletes) {
-                    cerr << "ERROR: MAX_ATHLETES exceeded" << endl;
-                    break;
-                }
-                cout << "Enter player name, followed by grades" << endl;
+//                cout << "Enter player name, followed by grades" << endl;
                 string player_name;
                 cin >> player_name;
                 if (!cinGoodStatus()){
@@ -49,6 +45,10 @@ void handleGame(int numOfReferees, int maxNumOfAthletes) {
                         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                         break;
                     }
+                }
+                if (players.getNumberOfPlayers() >= maxNumOfAthletes) {
+                    cerr << "ERROR: MAX_ATHLETES exceeded" << endl;
+                    break;
                 }
                 p->addGrades(grades);
                 players.addPlayer(p);
@@ -112,7 +112,7 @@ int get_input() {
     const int MAX_INPUT_VALUE = 6;
     int input;
 
-    print_options();
+//    print_options();
     cin >> input;
 
     /* make sure number is between MIN and MAX values   */
@@ -120,7 +120,7 @@ int get_input() {
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cerr << "ERROR: invalid command; type 0 for exit" << endl;
-        print_options();
+//        print_options();
         cin >> input;
     }
 
@@ -132,7 +132,7 @@ int get_input() {
  *  2) valid value in parameters*/
 void parse_args(int argc, char **argv, int *num_of_referees, int *num_of_athletes) {
     const int MAX_NUM_REFEREES = 30;
-    const int MAX_NUM_ATHLETES = 100;
+    const int MAX_NUM_ATHLETES = 100000;
     const int MIN_NUM_REFEREES = 0;
     const int MIN_NUM_ATHLETES = 3;
     stringstream ss;
